@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    stages {
+        stage('Clone java repo') {
+            steps {
+                script {
+                    dir("${WORKSPACE}") {
+                        git branch: "master",
+                        url: "https://github.com/joto2itgix/java-hello-world.git"
+                    }
+                }
+            }
+        }
+        stage('MVN Install') {
+            steps {
+                script {
+                    dir("${WORKSPACE}") {
+                        sh "mvn compile"
+                    }
+                }
+            }
+        }
+        stage('MVN Test') {
+            steps {
+                script {
+                    dir("${WORKSPACE}") {
+                        sh "mvn test"
+                    }
+                }
+            }
+        }
+    }
+}
